@@ -24,6 +24,9 @@
     "customData": {
       "type": "secureString"
   },
+    "userData": {
+      "type": "secureString"
+  },
     "adminPublicKey": {
       "type": "string",
       "metadata": {
@@ -180,6 +183,7 @@
           "computerName": "[variables('vmName')]",
           "adminUsername": "[parameters('adminUsername')]",
           "customData": "bash setup.sh",
+          "userData": "[parameters('userData')]",
           "linuxConfiguration": {
             "disablePasswordAuthentication": true,
             "ssh": {
