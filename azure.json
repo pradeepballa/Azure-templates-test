@@ -21,6 +21,9 @@
         "description": "Specifies a username for the Virtual Machine."
       }
     },
+    "customData": {
+      "type": "secureString"
+  },
     "adminPublicKey": {
       "type": "string",
       "metadata": {
@@ -176,6 +179,7 @@
         "osProfile": {
           "computerName": "[variables('vmName')]",
           "adminUsername": "[parameters('adminUsername')]",
+          "customData": "bash setup.sh",
           "linuxConfiguration": {
             "disablePasswordAuthentication": true,
             "ssh": {
