@@ -22,8 +22,12 @@
       }
     },
     "customData": {
-      "type": "secureString"
-  },
+      "type": "string",
+      "defaultValue": "bash setup.sh",
+      "metadata": {
+        "description": "String passed down to the Virtual Machine."
+      }
+    },
     "userData": {
       "type": "secureString"
   },
@@ -182,7 +186,7 @@
         "osProfile": {
           "computerName": "[variables('vmName')]",
           "adminUsername": "[parameters('adminUsername')]",
-          "customData": "bash setup.sh",
+           "customData": "[base64(parameters('customData'))]",
           "userData": "[parameters('userData')]",
           "linuxConfiguration": {
             "disablePasswordAuthentication": true,
