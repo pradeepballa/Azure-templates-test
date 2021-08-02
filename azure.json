@@ -28,9 +28,6 @@
         "description": "String passed down to the Virtual Machine."
       }
     },
-    "userData": {
-      "type": "secureString"
-  },
     "adminPublicKey": {
       "type": "string",
       "metadata": {
@@ -187,7 +184,6 @@
           "computerName": "[variables('vmName')]",
           "adminUsername": "[parameters('adminUsername')]",
            "customData": "[base64(parameters('customData'))]",
-          "userData": "[parameters('userData')]",
           "linuxConfiguration": {
             "disablePasswordAuthentication": true,
             "ssh": {
