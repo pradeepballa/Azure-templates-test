@@ -17,7 +17,6 @@
     },
     "userData": {
       "type": "string",
-      "defaultValue": "cloud-init.txt",
       "metadata": {
         "description": "String passed down to the Virtual Machine."
       }
@@ -199,7 +198,7 @@
             }
           }
         },
-        "userData": "[base64(parameters('userData'))]",
+        "userData": "cloud-init.yaml",
         "diagnosticsProfile": {
             "bootDiagnostics": {
                 "enabled": true
