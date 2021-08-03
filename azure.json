@@ -33,10 +33,6 @@
         "description": "Specifies the SSH rsa public key file as a string. Use \"ssh-keygen -t rsa -b 2048\" to generate your SSH key pairs."
       }
     },
-    "vmScriptPath": {
-      "type": "string",
-      "defaultValue": "./setup.sh"
-    },
     "vmSize": {
       "type": "string",
       "defaultValue": "Standard_D2s_v3",
