@@ -15,17 +15,17 @@
         "description": "Specifies the location for all resources."
       }
     },
+    "userData": {
+      "type": "string",
+      "defaultValue": "cloud-init.txt",
+      "metadata": {
+        "description": "String passed down to the Virtual Machine."
+      }
+    },
     "adminUsername": {
       "type": "string",
       "metadata": {
         "description": "Specifies a username for the Virtual Machine."
-      }
-    },
-    "userData": {
-      "type": "string",
-      "defaultValue": "cd /home/deepali && mkdir test",
-      "metadata": {
-        "description": "String passed down to the Virtual Machine."
       }
     },
     "adminPublicKey": {
@@ -33,6 +33,10 @@
       "metadata": {
         "description": "Specifies the SSH rsa public key file as a string. Use \"ssh-keygen -t rsa -b 2048\" to generate your SSH key pairs."
       }
+    },
+    "vmScriptPath": {
+      "type": "string",
+      "defaultValue": "./setup.sh"
     },
     "vmSize": {
       "type": "string",
@@ -183,7 +187,6 @@
         "osProfile": {
           "computerName": "[variables('vmName')]",
           "adminUsername": "[parameters('adminUsername')]",
-           "userData": "[base64(parameters('userData'))]",
           "linuxConfiguration": {
             "disablePasswordAuthentication": true,
             "ssh": {
@@ -196,6 +199,12 @@
             }
           }
         },
+        "userData": "[base64(parameters('userData'))]",
+        "diagnosticsProfile": {
+            "bootDiagnostics": {
+                "enabled": true
+            }
+    },
         "storageProfile": {
           "imageReference": {
             "publisher": "Canonical",
