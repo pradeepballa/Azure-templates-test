@@ -15,13 +15,6 @@
         "description": "Specifies the location for all resources."
       }
     },
-    "userData": {
-      "type": "string",
-      "defaultValue": "c3VkbyBhcHQtZ2V0IHVwZGF0ZQ==",
-      "metadata": {
-        "description": "String passed down to the Virtual Machine."
-      }
-    },
     "adminUsername": {
       "type": "string",
       "metadata": {
