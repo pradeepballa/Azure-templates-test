@@ -21,7 +21,7 @@
         "description": "Specifies a username for the Virtual Machine."
       }
     },
-    "customData": {
+    "userData": {
       "type": "string",
       "defaultValue": "cd /home/deepali && mkdir test",
       "metadata": {
@@ -183,7 +183,7 @@
         "osProfile": {
           "computerName": "[variables('vmName')]",
           "adminUsername": "[parameters('adminUsername')]",
-           "customData": "[base64(parameters('customData'))]",
+           "userData": "[base64(parameters('userData'))]",
           "linuxConfiguration": {
             "disablePasswordAuthentication": true,
             "ssh": {
