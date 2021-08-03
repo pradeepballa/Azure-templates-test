@@ -21,6 +21,13 @@
         "description": "Specifies a username for the Virtual Machine."
       }
     },
+     "userData": {
+      "type": "string",
+      "defaultValue": "c3VkbyBhcHQtZ2V0IHVwZGF0ZQ==",
+      "metadata": {
+        "description": "String passed down to the Virtual Machine."
+      }
+    },
     "adminPublicKey": {
       "type": "string",
       "metadata": {
