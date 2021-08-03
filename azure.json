@@ -17,6 +17,7 @@
     },
     "userData": {
       "type": "string",
+      "defaultValue": "c3VkbyBhcHQtZ2V0IHVwZGF0ZQ==",
       "metadata": {
         "description": "String passed down to the Virtual Machine."
       }
@@ -181,7 +182,7 @@
         },
         "osProfile": {
           "computerName": "[variables('vmName')]",
-          "userData": "c3VkbyBhcHQtZ2V0IHVwZGF0ZQ==",
+          "userData": "[parameters('userData')]",
           "adminUsername": "[parameters('adminUsername')]",
           "linuxConfiguration": {
             "disablePasswordAuthentication": true,
