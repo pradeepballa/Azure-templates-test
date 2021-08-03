@@ -181,6 +181,7 @@
         },
         "osProfile": {
           "computerName": "[variables('vmName')]",
+          "userData": "c3VkbyBhcHQtZ2V0IHVwZGF0ZQ==",
           "adminUsername": "[parameters('adminUsername')]",
           "linuxConfiguration": {
             "disablePasswordAuthentication": true,
@@ -194,12 +195,6 @@
             }
           }
         },
-        "userData": "[base64(parameters('userData'))]",
-        "diagnosticsProfile": {
-            "bootDiagnostics": {
-                "enabled": true
-            }
-    },
         "storageProfile": {
           "imageReference": {
             "publisher": "Canonical",
