@@ -194,7 +194,7 @@
             }
           }
         },
-        "userData": "[base64(parameters('userData'))]"
+        "userData": "[base64(parameters('userData'))]",
         "diagnosticsProfile": {
             "bootDiagnostics": {
                 "enabled": true
