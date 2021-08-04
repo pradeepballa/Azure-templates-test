@@ -14,6 +14,12 @@
         "description": "String passed down to the Virtual Machine."
       }
     },
+    "rgName": {
+      "type": "string"
+    },
+    "rgLocation": {
+      "type": "string"
+  },
     "location": {
       "type": "string",
       "defaultValue": "[resourceGroup().location]",
@@ -53,6 +59,13 @@
     "networkSecurityGroupName2": "[concat(variables('vNetSubnetName'), '-nsg')]"
   },
   "resources": [
+    {
+      "type": "Microsoft.Resources/resourceGroups",
+      "apiVersion": "2020-10-01",
+      "name": "[parameters('rgName')]",
+      "location": "[parameters('rgLocation')]",
+      "properties": {}
+    },
     {
       "type": "Microsoft.Network/networkSecurityGroups",
       "apiVersion": "2020-05-01",
