@@ -4,7 +4,7 @@
   "parameters": {
     "projectName": {
       "type": "string",
-      "defaultValue": "[securtiti, uniqueString(deployment().name]",
+      "defaultValue": "[concat('securiti',uniqueString(resourceGroup().id))]",
         "description": "Specifies a name for generating resource names."
     },
      "customData": {
@@ -14,14 +14,6 @@
         "description": "String passed down to the Virtual Machine."
       }
     },
-    "networkInterfaceName": {
-      "type": "string",
-      "defaultValue": "securiti-nic"
-   },
-    "networkSecurityGroupName": {
-    "type": "string",
-    "defaultValue": "securiti-nsg"
-   },
     "location": {
       "type": "string",
       "defaultValue": "[resourceGroup().location]",
@@ -41,18 +33,6 @@
         "description": "Specifies the SSH rsa public key file as a string. Use \"ssh-keygen -t rsa -b 2048\" to generate your SSH key pairs."
       }
     },
-    "publicIpAddressName": {
-      "type": "string",
-      "defaultValue": "securiti-IP"
-    },
-    "virtualMachineName": {
-    "type": "string",
-    "defaultValue": "securiti-VM"
-   },
-    "virtualNetworkName": {
-    "type": "string",
-    "defaultValue": "securiti-vNet"
-   },
     "vmSize": {
       "type": "string",
       "defaultValue": "Standard_D2s_v3",
@@ -62,15 +42,15 @@
     }
   },
   "variables": {
-    "vNetName": "[uniqueString(deployment().name, parameters('virtualNetworkName'))]",
+    "vNetName": "[concat(parameters('projectName'), '-vnet')]",
     "vNetAddressPrefixes": "10.0.0.0/16",
     "vNetSubnetName": "default",
     "vNetSubnetAddressPrefix": "10.0.0.0/24",
-    "vmName": "[uniqueString(deployment().name, parameters('virtualMachineName'))]",
-    "publicIPAddressName": "[uniqueString(deployment().name, parameters('publicIpAddressName'))]",
-    "networkInterfaceName": "[uniqueString(deployment().name, parameters('networkInterfaceName'))]",
-    "networkSecurityGroupName": "[uniqueString(deployment().name, parameters('networkSecurityGroupName'))]",
-    "networkSecurityGroupName2": "[concat(variables('vNetSubnetName'),uniqueString(deployment().name))]"
+    "vmName": "[concat(parameters('projectName'), '-vm')]",
+    "publicIPAddressName": "[concat(parameters('projectName'), '-ip')]",
+    "networkInterfaceName": "[concat(parameters('projectName'), '-nic')]",
+    "networkSecurityGroupName": "[concat(parameters('projectName'), '-nsg')]",
+    "networkSecurityGroupName2": "[concat(variables('vNetSubnetName'), '-nsg')]"
   },
   "resources": [
     {
