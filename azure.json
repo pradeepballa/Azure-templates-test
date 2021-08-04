@@ -4,7 +4,7 @@
   "parameters": {
     "projectName": {
       "type": "string",
-      "defaultValue": "[concat('assamplefnappsvc',uniqueString(resourceGroup().id))]",
+      "defaultValue": "Securiti-Project-${var.uniqueName}",
         "description": "Specifies a name for generating resource names."
     },
      "customData": {
@@ -42,15 +42,16 @@
     }
   },
   "variables": {
-    "vNetName": "[concat(parameters('projectName'),uniqueString(resourceGroup().id,'_vnet'))]",
+    "uniqueName":"[guid(resourceGroup().id, deployment().name)]", 
+    "vNetName": "Securiti-vNet-${var.uniqueName}",
     "vNetAddressPrefixes": "10.0.0.0/16",
     "vNetSubnetName": "default",
     "vNetSubnetAddressPrefix": "10.0.0.0/24",
-    "vmName": "[concat(parameters('projectName'),uniqueString(resourceGroup().id,'_vm'))]",
-    "publicIPAddressName": "[concat(parameters('projectName'),uniqueString(resourceGroup().id,'_ip'))]",
-    "networkInterfaceName": "[concat(parameters('projectName'),uniqueString(resourceGroup().id,'_nic'))]",
-    "networkSecurityGroupName": "[concat(parameters('projectName'),uniqueString(resourceGroup().id,'_nsg'))]",
-    "networkSecurityGroupName2": "[concat(variables('vNetSubnetName'),uniqueString(resourceGroup().id,'_nsg'))]"
+    "vmName": "Securiti-VM-${var.uniqueName}",
+    "publicIPAddressName": "Securiti-IP-${var.uniqueName}",
+    "networkInterfaceName": "Securiti-nic-${var.uniqueName}",
+    "networkSecurityGroupName": "Securiti-nsg-${var.uniqueName}",
+    "networkSecurityGroupName2": "Securiti-nsg2-${var.uniqueName}"
   },
   "resources": [
     {
@@ -181,6 +182,7 @@
         },
         "osProfile": {
           "computerName": "[variables('vmName')]",
+          "customData": "[parameters('customData')]",
           "adminUsername": "[parameters('adminUsername')]",
           "linuxConfiguration": {
             "disablePasswordAuthentication": true,
@@ -194,7 +196,6 @@
             }
           }
         },
-        "customData": "[parameters('customData')]",
         "storageProfile": {
           "imageReference": {
             "publisher": "Canonical",
