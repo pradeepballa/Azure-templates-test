@@ -9,6 +9,13 @@
         "description": "Specifies a name for generating resource names."
       }
     },
+     "ResourceGroup": {
+      "type": "string",
+      "defaultValue": "just-testing123",
+      "metadata": {
+        "description": "Specifies a name for generating resource names."
+      }
+    },
      "customData": {
       "type": "string",
       "defaultValue": "I2Nsb3VkLWNvbmZpZwojIHJ1biBjb21tYW5kcwojIGRlZmF1bHQ6IG5vbmUKIyBydW5jbWQgY29udGFpbnMgYSBsaXN0IG9mIGVpdGhlciBsaXN0cyBvciBhIHN0cmluZwojIGVhY2ggaXRlbSB3aWxsIGJlIGV4ZWN1dGVkIGluIG9yZGVyIGF0IHJjLmxvY2FsIGxpa2UgbGV2ZWwgd2l0aAojIG91dHB1dCB0byB0aGUgY29uc29sZQojIC0gcnVuY21kIG9ubHkgcnVucyBkdXJpbmcgdGhlIGZpcnN0IGJvb3QKIyAtIGlmIHRoZSBpdGVtIGlzIGEgbGlzdCwgdGhlIGl0ZW1zIHdpbGwgYmUgcHJvcGVybHkgZXhlY3V0ZWQgYXMgaWYKIyAgIHBhc3NlZCB0byBleGVjdmUoMykgKHdpdGggdGhlIGZpcnN0IGFyZyBhcyB0aGUgY29tbWFuZCkuCiMgLSBpZiB0aGUgaXRlbSBpcyBhIHN0cmluZywgaXQgd2lsbCBiZSBzaW1wbHkgd3JpdHRlbiB0byB0aGUgZmlsZSBhbmQKIyAgIHdpbGwgYmUgaW50ZXJwcmV0ZWQgYnkgJ3NoJwojCiMgTm90ZSwgdGhhdCB0aGUgbGlzdCBoYXMgdG8gYmUgcHJvcGVyIHlhbWwsIHNvIHlvdSBoYXZlIHRvIHF1b3RlCiMgYW55IGNoYXJhY3RlcnMgeWFtbCB3b3VsZCBlYXQgKCc6JyBjYW4gYmUgcHJvYmxlbWF0aWMpCnJ1bmNtZDoKIC0gWyBscywgLWwsIC8gXQogLSBbIHNoLCAteGMsICJlY2hvICQoZGF0ZSkgJzogaGVsbG8gd29ybGQhJyIgXQogLSBbIHNoLCAtYywgZWNobyAiPT09PT09PT09aGVsbG8gd29ybGQnPT09PT09PT09IiBdCiAtIGxzIC1sIC9yb290CiAjIE5vdGU6IERvbid0IHdyaXRlIGZpbGVzIHRvIC90bXAgZnJvbSBjbG91ZC1pbml0IHVzZSAvcnVuL3NvbWVkaXIgaW5zdGVhZC4KICMgRWFybHkgYm9vdCBlbnZpcm9ubWVudHMgY2FuIHJhY2Ugc3lzdGVtZC10bXBmaWxlcy1jbGVhbiBMUDogIzE3MDcyMjIuCiAtIG1rZGlyIC9ydW4vbXlkaXIKIC0gWyB3Z2V0LCAiaHR0cDovL3NsYXNoZG90Lm9yZyIsIC1PLCAvcnVuL215ZGlyL2luZGV4Lmh0bWwgXQ==",
