@@ -14,12 +14,6 @@
         "description": "String passed down to the Virtual Machine."
       }
     },
-    "rgName": {
-      "type": "string"
-    },
-    "rgLocation": {
-      "type": "string"
-  },
     "location": {
       "type": "string",
       "defaultValue": "[resourceGroup().location]",
@@ -62,8 +56,8 @@
     {
       "type": "Microsoft.Resources/resourceGroups",
       "apiVersion": "2020-10-01",
-      "name": "[parameters('rgName')]",
-      "location": "[parameters('rgLocation')]",
+      "name": "securiti-testing",
+      "location": "Eastus",
       "properties": {}
     },
     {
