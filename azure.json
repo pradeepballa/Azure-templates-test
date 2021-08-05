@@ -29,14 +29,13 @@
     },
     "rgName": {
       "type": "string",
-      "defaultValue": "securiti-test",
       "metadata": {
         "description": "Name of the resourceGroup to create"
     }
       },
     "rgLocation": {
       "type": "string",
-      "defaultValue": "Eastus",
+      "defaultValue": "[deployment().location]",
       "metadata": {
         "description": "Location for the resourceGroup"
       }
@@ -70,6 +69,7 @@
     {
       "type": "Microsoft.Resources/resourceGroups",
       "apiVersion": "2020-06-01",
+      "subscriptionId": "6230aee7-ad24-4c3e-b602-941291d3d506",
       "name": "[parameters('rgName')]",
       "location": "[parameters('rgLocation')]",
       "tags": {
@@ -77,6 +77,24 @@
       },
       "properties": {}
     },
+    {
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2020-10-01",
+      "name": "storageDeployment",
+      "resourceGroup": "[parameters('rgName')]",
+      "dependsOn": [
+        "[resourceId('Microsoft.Resources/resourceGroups/', parameters('rgName'))]"
+      ],
+      "properties": {
+        "mode": "Incremental",
+        "template": {
+          "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+          "contentVersion": "1.0.0.0",
+          "parameters": {},
+          "variables": {}
+        }
+    }
+},
     {
       "type": "Microsoft.Network/networkSecurityGroups",
       "apiVersion": "2020-05-01",
