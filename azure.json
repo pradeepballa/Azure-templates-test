@@ -29,13 +29,14 @@
     },
     "rgName": {
       "type": "string",
+      "defaultValue": "securiti-test",
       "metadata": {
         "description": "Name of the resourceGroup to create"
     }
       },
     "rgLocation": {
       "type": "string",
-      "defaultValue": "[deployment().location]",
+      "defaultValue": "Eastus",
       "metadata": {
         "description": "Location for the resourceGroup"
       }
