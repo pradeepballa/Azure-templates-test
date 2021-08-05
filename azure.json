@@ -27,13 +27,6 @@
         "description": "Specifies a username for the Virtual Machine."
       }
     },
-    "rgName": {
-      "type": "string",
-      "defaultValue": "myResourceGroup",
-      "metadata": {
-        "description": "Name of the resourceGroup to create"
-    }
-      },
     "adminPublicKey": {
       "type": "string",
       "metadata": {
@@ -125,9 +118,9 @@
       "apiVersion": "2020-05-01",
       "name": "[variables('vNetName')]",
       "location": "[parameters('location')]",
+      "resourceGroup": "myResourceGroup",
       "dependsOn": [
-        "[resourceId('Microsoft.Network/networkSecurityGroups', variables('networkSecurityGroupName2'))]",
-        "[resourceId('Microsoft.Resources/resourceGroups/', parameters('rgName'))]"
+        "[resourceId('Microsoft.Network/networkSecurityGroups', variables('networkSecurityGroupName2'))]"
       ],
       "properties": {
         "addressSpace": {
@@ -138,6 +131,7 @@
         "subnets": [
           {
             "name": "[variables('vNetSubnetName')]",
+            "resourceGroup": "myResourceGroup",
             "properties": {
               "addressPrefix": "[variables('vNetSubnetAddressPrefix')]",
               "networkSecurityGroup": {
@@ -153,11 +147,11 @@
       "apiVersion": "2020-05-01",
       "name": "[variables('networkInterfaceName')]",
       "location": "[parameters('location')]",
+      "resourceGroup": "myResourceGroup",
       "dependsOn": [
         "[resourceId('Microsoft.Network/publicIPAddresses', variables('publicIPAddressName'))]",
         "[resourceId('Microsoft.Network/virtualNetworks', variables('vNetName'))]",
-        "[resourceId('Microsoft.Network/networkSecurityGroups', variables('networkSecurityGroupName'))]",
-        "[resourceId('Microsoft.Resources/resourceGroups/', parameters('rgName'))]"
+        "[resourceId('Microsoft.Network/networkSecurityGroups', variables('networkSecurityGroupName'))]"
       ],
       "properties": {
         "ipConfigurations": [
@@ -181,9 +175,9 @@
       "apiVersion": "2019-12-01",
       "name": "[variables('vmName')]",
       "location": "[parameters('location')]",
+      "resourceGroup": "myResourceGroup",
       "dependsOn": [
-        "[resourceId('Microsoft.Network/networkInterfaces', variables('networkInterfaceName'))]",
-        "[resourceId('Microsoft.Resources/resourceGroups/', parameters('rgName'))]"
+        "[resourceId('Microsoft.Network/networkInterfaces', variables('networkInterfaceName'))]"
       ],
       "properties": {
         "hardwareProfile": {
