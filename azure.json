@@ -29,14 +29,13 @@
     },
     "rgName": {
       "type": "string",
-      "defaultValue": "[concat('securiti','-',uniqueString(resourceGroup().id))]",
       "metadata": {
         "description": "Name of the resourceGroup to create"
     }
       },
     "rgLocation": {
       "type": "string",
-      "defaultValue": "Eastus",
+      "defaultValue": "[deployment().location]",
       "metadata": {
         "description": "Location for the resourceGroup"
       }
