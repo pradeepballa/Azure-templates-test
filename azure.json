@@ -2,23 +2,259 @@
   "$schema": "https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
-    "rgLocation": {
+     "customData": {
       "type": "string",
-      "defaultValue": "Southeast Asia"
+      "defaultValue": "I2Nsb3VkLWNvbmZpZwojIHJ1biBjb21tYW5kcwojIGRlZmF1bHQ6IG5vbmUKIyBydW5jbWQgY29udGFpbnMgYSBsaXN0IG9mIGVpdGhlciBsaXN0cyBvciBhIHN0cmluZwojIGVhY2ggaXRlbSB3aWxsIGJlIGV4ZWN1dGVkIGluIG9yZGVyIGF0IHJjLmxvY2FsIGxpa2UgbGV2ZWwgd2l0aAojIG91dHB1dCB0byB0aGUgY29uc29sZQojIC0gcnVuY21kIG9ubHkgcnVucyBkdXJpbmcgdGhlIGZpcnN0IGJvb3QKIyAtIGlmIHRoZSBpdGVtIGlzIGEgbGlzdCwgdGhlIGl0ZW1zIHdpbGwgYmUgcHJvcGVybHkgZXhlY3V0ZWQgYXMgaWYKIyAgIHBhc3NlZCB0byBleGVjdmUoMykgKHdpdGggdGhlIGZpcnN0IGFyZyBhcyB0aGUgY29tbWFuZCkuCiMgLSBpZiB0aGUgaXRlbSBpcyBhIHN0cmluZywgaXQgd2lsbCBiZSBzaW1wbHkgd3JpdHRlbiB0byB0aGUgZmlsZSBhbmQKIyAgIHdpbGwgYmUgaW50ZXJwcmV0ZWQgYnkgJ3NoJwojCiMgTm90ZSwgdGhhdCB0aGUgbGlzdCBoYXMgdG8gYmUgcHJvcGVyIHlhbWwsIHNvIHlvdSBoYXZlIHRvIHF1b3RlCiMgYW55IGNoYXJhY3RlcnMgeWFtbCB3b3VsZCBlYXQgKCc6JyBjYW4gYmUgcHJvYmxlbWF0aWMpCnJ1bmNtZDoKIC0gWyBscywgLWwsIC8gXQogLSBbIHNoLCAteGMsICJlY2hvICQoZGF0ZSkgJzogaGVsbG8gd29ybGQhJyIgXQogLSBbIHNoLCAtYywgZWNobyAiPT09PT09PT09aGVsbG8gd29ybGQnPT09PT09PT09IiBdCiAtIGxzIC1sIC9yb290CiAjIE5vdGU6IERvbid0IHdyaXRlIGZpbGVzIHRvIC90bXAgZnJvbSBjbG91ZC1pbml0IHVzZSAvcnVuL3NvbWVkaXIgaW5zdGVhZC4KICMgRWFybHkgYm9vdCBlbnZpcm9ubWVudHMgY2FuIHJhY2Ugc3lzdGVtZC10bXBmaWxlcy1jbGVhbiBMUDogIzE3MDcyMjIuCiAtIG1rZGlyIC9ydW4vbXlkaXIKIC0gWyB3Z2V0LCAiaHR0cDovL3NsYXNoZG90Lm9yZyIsIC1PLCAvcnVuL215ZGlyL2luZGV4Lmh0bWwgXQ==",
+      "metadata": {
+        "description": "String passed down to the Virtual Machine."
+      }
+    },
+    "location": {
+      "type": "string",
+      "defaultValue": "[resourceGroup().location]",
+      "metadata": {
+        "description": "Specifies the location for all resources."
+      }
+    },
+    "adminUsername": {
+      "type": "string",
+      "metadata": {
+        "description": "Specifies a username for the Virtual Machine."
+      }
     },
     "rgName": {
       "type": "string",
-      "defaultValue": "myResourceGroup"
+      "defaultValue": "[concat('securiti','-',uniqueString(resourceGroup().id))]",
+      "metadata": {
+        "description": "Name of the resourceGroup to create"
+    }
+      },
+    "rgLocation": {
+      "type": "string",
+      "defaultValue": "Eastus",
+      "metadata": {
+        "description": "Location for the resourceGroup"
+      }
+      },
+    "adminPublicKey": {
+      "type": "string",
+      "metadata": {
+        "description": "Specifies the SSH rsa public key file as a string. Use \"ssh-keygen -t rsa -b 2048\" to generate your SSH key pairs."
+      }
+    },
+    "vmSize": {
+      "type": "string",
+      "defaultValue": "Standard_D2s_v3",
+      "metadata": {
+        "description": "description"
+      }
     }
   },
-  "variables": {},
+  "variables": {
+    "vNetName": "[concat(parameters('rgName'), '-vnet')]",
+    "vNetAddressPrefixes": "10.0.0.0/16",
+    "vNetSubnetName": "default",
+    "vNetSubnetAddressPrefix": "10.0.0.0/24",
+    "vmName": "[concat(parameters('rgName'), '-vm')]",
+    "publicIPAddressName": "[concat(parameters('rgName'), '-ip')]",
+    "networkInterfaceName": "[concat(parameters('rgName'), '-nic')]",
+    "networkSecurityGroupName": "[concat(parameters('rgName'), '-nsg')]",
+    "networkSecurityGroupName2": "[concat(variables('vNetSubnetName'), '-nsg')]"
+  },
   "resources": [
     {
       "type": "Microsoft.Resources/resourceGroups",
-      "apiVersion": "2018-05-01",
+      "apiVersion": "2020-06-01",
+      "name": "[parameters('rgName')]",
       "location": "[parameters('rgLocation')]",
-      "name": "[parameters('rgName')]"
+      "tags": {
+        "Note": "subscription level deployment"
+      },
+      "properties": {}
+    },
+    {
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2020-10-01",
+      "name": "storageDeployment",
+      "resourceGroup": "[parameters('rgName')]",
+      "dependsOn": [
+        "[resourceId('Microsoft.Resources/resourceGroups/', parameters('rgName'))]"
+      ],
+      "properties": {
+        "mode": "Incremental",
+        "template": {
+          "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+          "contentVersion": "1.0.0.0",
+          "parameters": {},
+          "variables": {}
+        }
     }
-  ],
-  "outputs": {}
+},
+    {
+      "type": "Microsoft.Network/networkSecurityGroups",
+      "apiVersion": "2020-05-01",
+      "name": "[variables('networkSecurityGroupName')]",
+      "location": "[parameters('location')]",
+      "properties": {
+        "securityRules": [
+          {
+            "name": "ssh_rule",
+            "properties": {
+              "description": "Locks inbound down to ssh default port 22.",
+              "protocol": "Tcp",
+              "sourcePortRange": "*",
+              "destinationPortRange": "22",
+              "sourceAddressPrefix": "*",
+              "destinationAddressPrefix": "*",
+              "access": "Allow",
+              "priority": 123,
+              "direction": "Inbound"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "type": "Microsoft.Network/publicIPAddresses",
+      "apiVersion": "2020-05-01",
+      "name": "[variables('publicIPAddressName')]",
+      "location": "[parameters('location')]",
+      "properties": {
+        "publicIPAllocationMethod": "Dynamic"
+      },
+      "sku": {
+        "name": "Basic"
+      }
+    },
+    {
+      "comments": "Simple Network Security Group for subnet [variables('vNetSubnetName')]",
+      "type": "Microsoft.Network/networkSecurityGroups",
+      "apiVersion": "2020-05-01",
+      "name": "[variables('networkSecurityGroupName2')]",
+      "location": "[parameters('location')]",
+      "properties": {
+        "securityRules": [
+          {
+            "name": "default-allow-22",
+            "properties": {
+              "priority": 1000,
+              "access": "Allow",
+              "direction": "Inbound",
+              "destinationPortRange": "22",
+              "protocol": "Tcp",
+              "sourceAddressPrefix": "*",
+              "sourcePortRange": "*",
+              "destinationAddressPrefix": "*"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "type": "Microsoft.Network/virtualNetworks",
+      "apiVersion": "2020-05-01",
+      "name": "[variables('vNetName')]",
+      "location": "[parameters('location')]",
+      "dependsOn": [
+        "[resourceId('Microsoft.Network/networkSecurityGroups', variables('networkSecurityGroupName2'))]",
+        "[resourceId('Microsoft.Resources/resourceGroups/', parameters('rgName'))]"
+      ],
+      "properties": {
+        "addressSpace": {
+          "addressPrefixes": [
+            "[variables('vNetAddressPrefixes')]"
+          ]
+        },
+        "subnets": [
+          {
+            "name": "[variables('vNetSubnetName')]",
+            "properties": {
+              "addressPrefix": "[variables('vNetSubnetAddressPrefix')]",
+              "networkSecurityGroup": {
+                "id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('networkSecurityGroupName2'))]"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "type": "Microsoft.Network/networkInterfaces",
+      "apiVersion": "2020-05-01",
+      "name": "[variables('networkInterfaceName')]",
+      "location": "[parameters('location')]",
+      "dependsOn": [
+        "[resourceId('Microsoft.Network/publicIPAddresses', variables('publicIPAddressName'))]",
+        "[resourceId('Microsoft.Network/virtualNetworks', variables('vNetName'))]",
+        "[resourceId('Microsoft.Network/networkSecurityGroups', variables('networkSecurityGroupName'))]",
+        "[resourceId('Microsoft.Resources/resourceGroups/', parameters('rgName'))]"
+      ],
+      "properties": {
+        "ipConfigurations": [
+          {
+            "name": "ipconfig1",
+            "properties": {
+              "privateIPAllocationMethod": "Dynamic",
+              "publicIPAddress": {
+                "id": "[resourceId('Microsoft.Network/publicIPAddresses', variables('publicIPAddressName'))]"
+              },
+              "subnet": {
+                "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('vNetName'), variables('vNetSubnetName'))]"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "type": "Microsoft.Compute/virtualMachines",
+      "apiVersion": "2019-12-01",
+      "name": "[variables('vmName')]",
+      "location": "[parameters('location')]",
+      "dependsOn": [
+        "[resourceId('Microsoft.Network/networkInterfaces', variables('networkInterfaceName'))]",
+        "[resourceId('Microsoft.Resources/resourceGroups/', parameters('rgName'))]"
+      ],
+      "properties": {
+        "hardwareProfile": {
+          "vmSize": "[parameters('vmSize')]"
+        },
+        "osProfile": {
+          "computerName": "[variables('vmName')]",
+          "customData": "[parameters('customData')]",
+          "adminUsername": "[parameters('adminUsername')]",
+          "linuxConfiguration": {
+            "disablePasswordAuthentication": true,
+            "ssh": {
+              "publicKeys": [
+                {
+                  "path": "[concat('/home/', parameters('adminUsername'), '/.ssh/authorized_keys')]",
+                  "keyData": "[parameters('adminPublicKey')]"
+                }
+              ]
+            }
+          }
+        },
+        "storageProfile": {
+          "imageReference": {
+            "publisher": "Canonical",
+            "offer": "UbuntuServer",
+            "sku": "18.04-LTS",
+            "version": "latest"
+          },
+          "osDisk": {
+            "createOption": "fromImage"
+          }
+        },
+        "networkProfile": {
+          "networkInterfaces": [
+            {
+              "id": "[resourceId('Microsoft.Network/networkInterfaces', variables('networkInterfaceName'))]"
+            }
+          ]
+        }
+
+      }
+    }
+ ]
 }
