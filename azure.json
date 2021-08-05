@@ -31,12 +31,14 @@
       "type": "string",
       "metadata": {
         "description": "Name of the resourceGroup to create"
+    }
       },
     "rgLocation": {
       "type": "string",
       "defaultValue": "[deployment().location]",
       "metadata": {
         "description": "Location for the resourceGroup"
+      }
       },
     "adminPublicKey": {
       "type": "string",
