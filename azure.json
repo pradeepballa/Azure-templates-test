@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schema.management.azure.com/schemas/2018-05-01/deploymentTemplate.json#",
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
     "projectName": {
@@ -118,7 +118,6 @@
       "apiVersion": "2020-05-01",
       "name": "[variables('vNetName')]",
       "location": "[parameters('location')]",
-      "resourceGroup": "myResourceGroup",
       "dependsOn": [
         "[resourceId('Microsoft.Network/networkSecurityGroups', variables('networkSecurityGroupName2'))]"
       ],
@@ -131,7 +130,6 @@
         "subnets": [
           {
             "name": "[variables('vNetSubnetName')]",
-            "resourceGroup": "myResourceGroup",
             "properties": {
               "addressPrefix": "[variables('vNetSubnetAddressPrefix')]",
               "networkSecurityGroup": {
@@ -147,7 +145,6 @@
       "apiVersion": "2020-05-01",
       "name": "[variables('networkInterfaceName')]",
       "location": "[parameters('location')]",
-      "resourceGroup": "myResourceGroup",
       "dependsOn": [
         "[resourceId('Microsoft.Network/publicIPAddresses', variables('publicIPAddressName'))]",
         "[resourceId('Microsoft.Network/virtualNetworks', variables('vNetName'))]",
@@ -175,7 +172,6 @@
       "apiVersion": "2019-12-01",
       "name": "[variables('vmName')]",
       "location": "[parameters('location')]",
-      "resourceGroup": "myResourceGroup",
       "dependsOn": [
         "[resourceId('Microsoft.Network/networkInterfaces', variables('networkInterfaceName'))]"
       ],
