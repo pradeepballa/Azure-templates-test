@@ -70,7 +70,6 @@
     {
       "type": "Microsoft.Resources/resourceGroups",
       "apiVersion": "2020-06-01",
-      "subscriptionId": "6230aee7-ad24-4c3e-b602-941291d3d506",
       "name": "[parameters('rgName')]",
       "location": "[parameters('rgLocation')]",
       "tags": {
