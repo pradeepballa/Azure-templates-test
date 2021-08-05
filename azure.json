@@ -1,5 +1,5 @@
 {
-"$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "$schema": "https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
     "projectName": {
@@ -149,13 +149,19 @@
         "addressSpace": {
           "addressPrefixes": [
             "[variables('vNetAddressPrefixes')]"
-          ]
+          ],
+          "template": {
+            "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#"
+        }
         },
         "subnets": [
           {
             "name": "[variables('vNetSubnetName')]",
             "properties": {
               "addressPrefix": "[variables('vNetSubnetAddressPrefix')]",
+              "template": {
+                "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#"
+            },
               "networkSecurityGroup": {
                 "id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('networkSecurityGroupName2'))]"
               }
@@ -176,6 +182,9 @@
         "[resourceId('Microsoft.Resources/resourceGroups/', parameters('rgName'))]"
       ],
       "properties": {
+        "template": {
+          "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#"
+      },
         "ipConfigurations": [
           {
             "name": "ipconfig1",
@@ -232,6 +241,9 @@
             "createOption": "fromImage"
           }
         },
+        "template": {
+          "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#"
+      },
         "networkProfile": {
           "networkInterfaces": [
             {
